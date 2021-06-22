@@ -37,5 +37,4 @@ img {
 .App {
   flex-direction: column;
   display: flex;
-  align-items: center;
 }

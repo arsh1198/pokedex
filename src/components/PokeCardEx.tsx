@@ -8,13 +8,13 @@ import getTypeEmoji from '../utils/getTypeEmoji'
 const Card = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
     height: 550px;
     width: 380px;
     margin-top: 2em;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    padding: 1em;
     `
 const Image = styled.div`
     display: flex;
@@ -39,6 +39,20 @@ margin-top:2em;
 td{
     color: rgba(0,0,0,8)
 }
+
+
+`
+
+const InfoContainer = styled.div `
+display: flex;
+flex-direction: column;
+align-items: center;
+background: rgba(f,f,f,f.8);
+backdrop-filter: saturate(180%) blur(10px);
+width: 100%;
+height: 100%;
+border-radius: 15px ;
+border: 4px solid rgba(0,0,0,0.5)
 `
 
 interface Props {
@@ -53,6 +67,8 @@ const PokemonCard = ({url, name, pokemon}: Props) => {
 
     
     return <Card style={{background:`linear-gradient(${data.lightMuted}, ${data.lightVibrant})`}}>
+        
+        <InfoContainer>
         <Image style={{background: `linear-gradient(${data.darkMuted}, ${data.darkVibrant})`}}>
             <img src={url}/>
         </Image>
@@ -64,6 +80,7 @@ const PokemonCard = ({url, name, pokemon}: Props) => {
                 <td style={{textAlign: 'center'}}>{stat.base_stat}</td>
             </tr>)}
         </StatsTable>
+        </InfoContainer>
     </Card>
 }
 export default PokemonCard

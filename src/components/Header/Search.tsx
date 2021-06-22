@@ -1,7 +1,8 @@
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
-import pokemons from '../data';
+import pokemons from '../../data';
 import React,{ useState } from "react";
+import { grey } from "@material-ui/core/colors";
 
 type searchPropTypes =  {
     query: string | null,
@@ -11,7 +12,7 @@ type searchPropTypes =  {
 const Search = ({query, setQuery
 } : searchPropTypes) => {
     const [inputValue, setInputValue] = useState('');
-    return <Autocomplete
+    return  <Autocomplete
     value={query}
     onChange={(event, newValue) => {
       setQuery(newValue);
@@ -33,8 +34,9 @@ const Search = ({query, setQuery
         placeholder='search for a pokemon'
       />
     )}
-    style={{width: '500px', marginTop: '2.5em'}}
+    style={{width: '500px'}}
   />
+  
 }
 
 export default Search
