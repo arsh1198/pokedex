@@ -61,7 +61,7 @@ interface Props {
     url: string
 }
 
-const PokemonCard = ({url, name, pokemon}: Props) => {
+const PokemonCardEx = ({url, name, pokemon}: Props) => {
     const {data, loading, error} = usePalette(url)
     const {stats} = pokemon
 
@@ -83,4 +83,4 @@ const PokemonCard = ({url, name, pokemon}: Props) => {
         </InfoContainer>
     </Card>
 }
-export default PokemonCard
+export default PokemonCardEx

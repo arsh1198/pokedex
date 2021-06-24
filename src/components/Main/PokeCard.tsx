@@ -14,10 +14,16 @@ const Card = styled.div `
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
 `
-const PokeCard = () => {
+
+interface Props{
+    url: string
+    title: string
+}
+
+const PokeCard = ({url, title}: Props) => {
     return <Card> 
-        <img src='public\assets\nuzuko.jpg' alt='pokemon-img'/>
-        <h3>Pokemon</h3>
+        <img src={url} alt='pokemon-img'/>
+        <h3>{title}</h3>
     </Card>
 }
 
