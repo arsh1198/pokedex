@@ -56,6 +56,16 @@ export interface Type {
 }
 
 export interface PokemonResponse {
+    count: number
+    next: string | null
+    previous: string | null
+    results: Array<{
+        name: string
+        url: string
+    }>
+}
+
+export interface Pokemon {
     abilities: Ability[];
     base_experience: number;
     forms: unknown[];

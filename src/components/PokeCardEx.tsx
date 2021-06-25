@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import * as React from 'react'
 import {usePalette} from 'react-palette'
-import { PokemonResponse } from '../types'
+import { Pokemon } from '../types'
 import getTypeEmoji from '../utils/getTypeEmoji'
 
 
@@ -57,7 +57,7 @@ border: 4px solid rgba(0,0,0,0.5)
 
 interface Props {
     name: string | null
-    pokemon: PokemonResponse
+    pokemon: Pokemon
     url: string
 }
 

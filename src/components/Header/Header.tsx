@@ -6,7 +6,7 @@ import ThemeToggle from './ThemeToggle';
 const Container = styled.header `
 display: flex;
 align-items: center;
-justify-content: space-around;
+justify-content: space-evenly;
 width: 100%auto;
 padding: 1.25em;
 background: #a9e4ff

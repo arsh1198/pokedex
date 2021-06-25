@@ -1,12 +1,20 @@
+import axios from 'axios'
 import * as React from 'react'
+import { useQuery } from 'react-query'
 import styled from 'styled-components'
+import { Pokemon } from '../../types'
 
 const Card = styled.div `
+    display:flex;   
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
     width: 220px;
+    min-height: 250px;
+    padding: 2em;
     background: #e5e5e5;
     border-radius: 5px;
-    padding: 0.5em;
-    margin: 0em 1.5em 1.5em 0em;
+    margin: 0em 0.75em 1.5em 0.75em;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     &:hover{
@@ -16,15 +24,22 @@ const Card = styled.div `
 `
 
 interface Props{
-    url: string
     title: string
 }
 
-const PokeCard = ({url, title}: Props) => {
-    return <Card> 
-        <img src={url} alt='pokemon-img'/>
-        <h3>{title}</h3>
-    </Card>
+const fetchPokemon = async (pokemonName: string) => {
+   const {data} = await axios.get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+   return data
+}
+
+const PokeCard = ({title}: Props) => {
+    const {data, status} = useQuery(['pokemon-img', title],({queryKey: [_, pokemonName]}) => fetchPokemon(pokemonName), {enabled: Boolean(title) })
+    const imgUrl = data?.sprites.other['official-artwork'].front_default
+    return  <Card> 
+                {status === 'success' && <img src={imgUrl} alt='pokemong'/>}
+                <h3>{title}</h3>
+            </Card>
+
 }
 
 export default PokeCard

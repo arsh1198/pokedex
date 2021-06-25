@@ -1,42 +1,27 @@
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import TextField from "@material-ui/core/TextField";
-import pokemons from '../../data';
 import React,{ useState } from "react";
-import { grey } from "@material-ui/core/colors";
+import styled from "styled-components";
+import { useRadioGroup, HStack, Input } from '@chakra-ui/react';
+import FilterOptions from '../FilterOptions';
+import TypeSelect from "../TypeSelect";
 
-type searchPropTypes =  {
-    query: string | null,
-    setQuery: (value: string | null) => void
-}
+const Container = styled.div `
+width: 100%;
+max-width: 500px;
+  display: flex;
+  justify-content: space-between; `
 
-const Search = ({query, setQuery
-} : searchPropTypes) => {
-    const [inputValue, setInputValue] = useState('');
-    return  <Autocomplete
-    value={query}
-    onChange={(event, newValue) => {
-      setQuery(newValue);
-      console.log(newValue);
-    }}
-    inputValue={inputValue}
-    onInputChange={(event, newInputValue) => {
-      setInputValue(newInputValue);
-    }}
-    options={pokemons}
-    getOptionLabel={(pokemon) => pokemon}
-    renderInput={(params) => (
-      <TextField
-      color='primary'
-      style={{background:'#fff'}}
-        {...params}
-        variant="outlined"
-        
-        placeholder='search for a pokemon'
-      />
-    )}
-    style={{width: '500px'}}
-  />
+const Search = () => {
+  const [value, setValue] = useState('')
   
+
+  
+
+
+  return <Container>
+
+  <Input placeholder='Search for a pokemon' bg='#fff' w='100%' maxW = '300px' value={value} onChange={e => setValue(e.target.value)}/>
+    <FilterOptions/>
+  </Container>
 }
 
 export default Search

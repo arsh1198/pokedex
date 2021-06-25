@@ -3,13 +3,14 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import PokeCard from './PokeCard';
 import styled from 'styled-components';
+import {  PokemonResponse } from '../../types';
 
 export interface Props {
     
 }
 
 const fetchPokemons = async () => {
-    const {data} = await axios.get('https://pokeapi.co/api/v2/pokemon')
+    const {data} = await axios.get<PokemonResponse>('https://pokeapi.co/api/v2/pokemon')
     
     return data
 }
@@ -18,14 +19,13 @@ const Container = styled.div `
 display: flex;
 justify-content: center;
 flex-wrap: wrap;
-padding: 2em 4em;
+margin-top: 1.5em;
 `
  
 const PokemonCards = () => {
     const {data, status} = useQuery('pokemons', fetchPokemons)
-    console.log(data)
     return (  <Container>
-        {status === 'success' && data.results.map(pokemon => <PokeCard url='public\assets\nuzuko.jpg' key={pokemon.name} title={pokemon.name} />)}
+        {status === 'success' && (data as PokemonResponse).results.map(pokemon => <PokeCard key={pokemon.name} title={pokemon.name} />)}
     </Container>);
 }
  

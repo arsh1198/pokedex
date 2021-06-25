@@ -6,8 +6,9 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@chakra-ui/react": "^1.6.4",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
     "axios": "^0.21.1",
     "framer-motion": "^4.1.17",
     "prettier": "^2.3.1",
