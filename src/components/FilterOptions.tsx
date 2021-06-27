@@ -1,18 +1,25 @@
-import * as React from 'react'
-import { HStack ,Box, RadioProps, useRadio, useRadioGroup} from "@chakra-ui/react"
+import * as React from "react";
+import {
+  HStack,
+  Box,
+  RadioProps,
+  useRadio,
+  useRadioGroup,
+} from "@chakra-ui/react";
+import useStore from "../Store";
 
 const RadioCard = (props: RadioProps) => {
-  const { getInputProps, getCheckboxProps } = useRadio(props)
+  const { getInputProps, getCheckboxProps } = useRadio(props);
 
-  const input = getInputProps()
-  const checkbox = getCheckboxProps()
+  const input = getInputProps();
+  const checkbox = getCheckboxProps();
 
   return (
     <Box as="label">
       <input {...input} />
       <Box
         {...checkbox}
-        bg='#fff'
+        bg="#fff"
         cursor="pointer"
         borderWidth="1px"
         borderRadius="md"
@@ -31,29 +38,33 @@ const RadioCard = (props: RadioProps) => {
         {props.children}
       </Box>
     </Box>
-  )
-}
+  );
+};
 
 const FilterOptions = () => {
-  const options = ['Type', 'Generation']
-  
+  const options = ["Type", "Generation"];
+  const setFilter = useStore((state) => state.setFilter);
 
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
     name: "filters",
     defaultValue: "Type",
-    onChange: console.log,
-  })
+    onChange: (val) => {
+      setFilter(val);
+    },
+  });
 
-  return <HStack {...getRadioRootProps()}>
-  {options.map((value) => {
-    const radio = getRadioProps({ value })
-    return (
-      <RadioCard key={value} {...radio}>
-        {value}
-      </RadioCard>
-    )
-  })}
-</HStack>
-}
+  return (
+    <HStack {...getRadioRootProps()}>
+      {options.map((value) => {
+        const radio = getRadioProps({ value });
+        return (
+          <RadioCard key={value} {...radio}>
+            {value}
+          </RadioCard>
+        );
+      })}
+    </HStack>
+  );
+};
 
-export default FilterOptions
+export default FilterOptions;
