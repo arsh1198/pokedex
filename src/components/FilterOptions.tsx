@@ -46,8 +46,7 @@ const FilterOptions = () => {
   const setFilter = useStore((state) => state.setFilter);
 
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
-    name: "filters",
-    defaultValue: "Type",
+    name: "pokemonTypes",
     onChange: (val) => {
       setFilter(val);
     },

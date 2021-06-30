@@ -23,42 +23,42 @@ const CheckBoxCard = (props: RadioProps) => {
     <Box as="label">
       <input {...input} />
       <Box
-        bg="#fff"
         {...checkbox}
+        bg="#fff"
         cursor="pointer"
-        borderWidth="2px"
-        borderColor={Color(typeStyles[type].color).alpha(0.3).toString()}
-        color={Color(typeStyles[type].color).alpha(0.3).toString()}
-        borderRadius="xl"
+        borderWidth="1px"
+        borderRadius="md"
         boxShadow="md"
         _checked={{
-          bg: Color(typeStyles[type].color).alpha(0.1).toString(),
-          color: typeStyles[type].color,
-          borderColor: typeStyles[type].color,
+          bg: "teal.600",
+          color: "white",
+          borderColor: "teal.600",
+        }}
+        _focus={{
+          boxShadow: "outline",
         }}
         px={3}
         py={1.5}
       >
-        {`${typeStyles[type].emoji} `}
         {props.children}
       </Box>
     </Box>
   );
 };
 
-const TypeSelect = () => {
-  const types = pokemonTypes;
-  const setType = useStore((state) => state.setType);
+const GenSelect = () => {
+  const generations = [1, 2, 3, 4, 5, 6, 7, 8];
+  const setGen = useStore((state) => state.setGen);
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
-    name: "filters",
+    name: "generation",
     onChange: (val) => {
-      setType(val);
+      setGen(val);
     },
   });
 
   return (
     <HStack {...getRadioRootProps()}>
-      {types.map((value) => {
+      {generations.map((value) => {
         const radio = getRadioProps({ value });
         return (
           <CheckBoxCard bg="#fff" key={value} value={value} {...radio}>
@@ -70,4 +70,4 @@ const TypeSelect = () => {
   );
 };
 
-export default TypeSelect;
+export default GenSelect;

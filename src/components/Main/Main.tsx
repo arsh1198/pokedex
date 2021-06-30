@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import useStore from "../../Store";
 import TypeSelect from "../TypeSelect";
+import GenSelect from "../GenSelect";
 import PokemonCards from "./PokeCards";
 
 const Container = styled.main`
@@ -15,6 +16,7 @@ const Main = () => {
   return (
     <Container>
       {filterBy === "Type" && <TypeSelect />}
+      {filterBy === "Generation" && <GenSelect />}
       <PokemonCards />
     </Container>
   );
