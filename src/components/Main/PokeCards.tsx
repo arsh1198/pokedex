@@ -10,9 +10,11 @@ export interface Props {}
 
 const fetchPokemons = async ({ queryKey }) => {
   const type = queryKey[1];
+  const gen = queryKey[2]
+  console.log(gen)
   const { data } =
     type === ""
-      ? await axios.get<PokemonResponse>("https://pokeapi.co/api/v2/pokemon")
+      ? await axios.get<PokemonResponse>(`https://pokeapi.co/api/v2/generation/${gen}`)
       : await axios.get<PokemonResponse>(
           `https://pokeapi.co/api/v2/type/${type}`
         );
@@ -28,13 +30,14 @@ const Container = styled.div`
 
 const PokemonCards = () => {
   const type = useStore((state) => state.type);
-  const { data, status } = useQuery(["pokemons", type], fetchPokemons);
+  const gen = useStore((state) => state.gen);
+  const { data, status } = useQuery(["pokemons", type, gen], fetchPokemons);
   return (
     <Container>
       {status === "loading" && <p>Loading...</p>}
-      {type === "" &&
+      {type == "" && gen &&
         status === "success" &&
-        (data as PokemonResponse).results.map((pokemon) => (
+        (data as PokemonResponse).pokemon_species.map((pokemon) => (
           <PokeCard key={pokemon.name} title={pokemon.name} />
         ))}
       {type !== "" &&

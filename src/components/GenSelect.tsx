@@ -1,23 +1,18 @@
 import * as React from "react";
 import {
-  Box,
   HStack,
-  CheckboxProps,
-  useCheckboxGroup,
+  Box,
+  RadioProps,
   useRadio,
   useRadioGroup,
-  RadioProps,
 } from "@chakra-ui/react";
-import { PokemonType, pokemonTypes, typeStyles } from "../utils/pokemonTypes";
-import * as Color from "color";
 import useStore from "../Store";
 
-const CheckBoxCard = (props: RadioProps) => {
+const RadioCard = (props: RadioProps) => {
   const { getInputProps, getCheckboxProps } = useRadio(props);
 
   const input = getInputProps();
   const checkbox = getCheckboxProps();
-  const type = props.value as PokemonType;
 
   return (
     <Box as="label">
@@ -47,10 +42,12 @@ const CheckBoxCard = (props: RadioProps) => {
 };
 
 const GenSelect = () => {
-  const generations = [1, 2, 3, 4, 5, 6, 7, 8];
+  const generations = ['1','2', '3','4','5', '6', '7', '8'];
   const setGen = useStore((state) => state.setGen);
+  
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
     name: "generation",
+    defaultValue: '1',
     onChange: (val) => {
       setGen(val);
     },
@@ -61,9 +58,9 @@ const GenSelect = () => {
       {generations.map((value) => {
         const radio = getRadioProps({ value });
         return (
-          <CheckBoxCard bg="#fff" key={value} value={value} {...radio}>
-            {value}
-          </CheckBoxCard>
+          <RadioCard key={value} value={value} {...radio}>
+            {`Gen ${value}`}
+          </RadioCard>
         );
       })}
     </HStack>

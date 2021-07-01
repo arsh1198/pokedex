@@ -9,7 +9,7 @@ import {
 import useStore from "../Store";
 
 const RadioCard = (props: RadioProps) => {
-  const { getInputProps, getCheckboxProps } = useRadio(props);
+  const { getInputProps, getCheckboxProps } =           useRadio(props);
 
   const input = getInputProps();
   const checkbox = getCheckboxProps();
@@ -44,11 +44,13 @@ const RadioCard = (props: RadioProps) => {
 const FilterOptions = () => {
   const options = ["Type", "Generation"];
   const setFilter = useStore((state) => state.setFilter);
+  const setType = useStore((state) => state.setType);
 
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
     name: "pokemonTypes",
     onChange: (val) => {
       setFilter(val);
+      setType('');
     },
   });
 
