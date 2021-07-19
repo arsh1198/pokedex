@@ -6,24 +6,24 @@ import {
   useCheckboxGroup,
   useRadio,
   useRadioGroup,
-  RadioProps,
+  RadioProps
 } from "@chakra-ui/react";
 import { PokemonType, pokemonTypes, typeStyles } from "../utils/pokemonTypes";
 import * as Color from "color";
 import useStore from "../Store";
 import { animate, motion } from "framer-motion";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const variants = {
   initial: {
-    y: -50,
+    y: -50
   },
   animate: {
-    y: 0,
+    y: 0
   },
   exit: {
-    y: -50,
-  },
+    y: -50
+  }
 };
 
 const CheckBoxCard = (props: RadioProps) => {
@@ -47,7 +47,7 @@ const CheckBoxCard = (props: RadioProps) => {
         _checked={{
           bg: Color(typeStyles[type].color).alpha(0.1).toString(),
           color: typeStyles[type].color,
-          borderColor: typeStyles[type].color,
+          borderColor: typeStyles[type].color
         }}
         px={3}
         py={1.5}
@@ -62,20 +62,27 @@ const CheckBoxCard = (props: RadioProps) => {
 const TypeSelect = () => {
   const types = pokemonTypes;
   const history = useHistory();
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const currentType = params.get("type");
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
     name: "filters",
+    value: currentType ?? "fire",
     onChange: (val) => {
+      const params = new URLSearchParams({ type: val });
+
       history.push({
-        pathname: `/type/${val}`,
+        pathname: "/",
+        search: params.toString()
       });
-    },
+    }
   });
 
   return (
     <motion.div
       variants={variants}
       transition={{
-        y: { type: "spring", damping: 10, stiffness: 50 },
+        y: { type: "spring", damping: 10, stiffness: 50 }
       }}
       initial="initial"
       animate="animate"

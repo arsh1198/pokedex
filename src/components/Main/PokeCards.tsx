@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Params, PokemonGenResponse, PokemonTypeResponse } from "../../types";
 import { motion } from "framer-motion";
 import { Spinner } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { RouteComponentProps, useParams } from "react-router-dom";
 
 interface QueryType {
   queryKey: Array<any>;
@@ -33,11 +33,12 @@ const Container = styled(motion.div)`
   margin-top: 1.5em;
 `;
 
-const PokemonCards = () => {
-  const { pokemonType } = useParams<Params>();
-  const { generation } = useParams<Params>();
+interface PokemonCardsProps extends RouteComponentProps {}
 
-  console.log("PARAMS => ", pokemonType, generation);
+const PokemonCards = ({ location }: PokemonCardsProps) => {
+  const params = new URLSearchParams(location.search);
+  const pokemonType = params.get("type") ?? "fire";
+  const generation = params.get("gen") ?? 1;
 
   const { data, status } = useQuery(
     ["pokemons", pokemonType, generation],

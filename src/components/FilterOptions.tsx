@@ -4,9 +4,10 @@ import {
   Box,
   RadioProps,
   useRadio,
-  useRadioGroup,
+  useRadioGroup
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
+import useStore, { Filter } from "../Store";
 
 const RadioCard = (props: RadioProps) => {
   const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -27,13 +28,14 @@ const RadioCard = (props: RadioProps) => {
         _checked={{
           bg: "teal.600",
           color: "white",
-          borderColor: "teal.600",
+          borderColor: "teal.600"
         }}
         _focus={{
-          boxShadow: "outline",
+          boxShadow: "outline"
         }}
         px={3}
         py={1.5}
+        textTransform="capitalize"
       >
         {props.children}
       </Box>
@@ -41,18 +43,19 @@ const RadioCard = (props: RadioProps) => {
   );
 };
 
-const FilterOptions = () => {
-  const options = ["Type", "Generation"];
-  const history = useHistory();
+interface FilterOptionsProps {
+  setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const FilterOptions = ({ setCurrentTab }: FilterOptionsProps) => {
+  const setFilter = useStore((state) => state.setFilter);
+  const options = ["type", "generation"];
 
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
     name: "pokemonTypes",
-    onChange: (val) => {
-      history.push({
-        pathname: `/${val.toLowerCase()}`,
-      });
-      1;
-    },
+    onChange: (val: Exclude<Filter, null>) => {
+      setFilter(val);
+    }
   });
 
   return (
