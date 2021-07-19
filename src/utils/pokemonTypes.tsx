@@ -4,7 +4,7 @@ export const typeStyles = {
   grass: { emoji: "🌿", color: "#009100" },
   water: { emoji: "💦", color: "#005c91" },
   fire: { emoji: "🔥", color: "#bb2c00" },
-  ice: { emoji: "🧊", color: "#008091" },
+  ice: { emoji: "🥶", color: "#008091" },
   fighting: { emoji: "🥊", color: "#b90000" },
   poison: { emoji: "☣", color: "#800091" },
   ground: { emoji: "🥌", color: "#692100" },

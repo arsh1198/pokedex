@@ -1,22 +1,27 @@
-import * as React from 'react'
+import * as React from "react";
 import styled from "styled-components";
 import Search from "./Search";
-import ThemeToggle from './ThemeToggle';
+import ThemeToggle from "./ThemeToggle";
+import { useTheme } from "../../theme/theme";
 
-const Container = styled.header `
-display: flex;
-align-items: center;
-justify-content: space-evenly;
-width: 100%auto;
-padding: 1.25em;
-background: #a9e4ff
-`
+const Container = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: ${({ theme }) => theme.header};
+  width: 100%;
+  padding: 1.25em;
+  z-index: 5;
+`;
 
 const Header = () => {
-    return <Container>
-        <Search/>
-        <ThemeToggle/>
+  const theme = useTheme();
+  return (
+    <Container theme={theme}>
+      <Search />
+      <ThemeToggle />
     </Container>
-}
+  );
+};
 
-export default Header
+export default Header;

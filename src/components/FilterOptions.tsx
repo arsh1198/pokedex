@@ -6,10 +6,10 @@ import {
   useRadio,
   useRadioGroup,
 } from "@chakra-ui/react";
-import useStore from "../Store";
+import { useHistory } from "react-router-dom";
 
 const RadioCard = (props: RadioProps) => {
-  const { getInputProps, getCheckboxProps } =           useRadio(props);
+  const { getInputProps, getCheckboxProps } = useRadio(props);
 
   const input = getInputProps();
   const checkbox = getCheckboxProps();
@@ -43,14 +43,15 @@ const RadioCard = (props: RadioProps) => {
 
 const FilterOptions = () => {
   const options = ["Type", "Generation"];
-  const setFilter = useStore((state) => state.setFilter);
-  const setType = useStore((state) => state.setType);
+  const history = useHistory();
 
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
     name: "pokemonTypes",
     onChange: (val) => {
-      setFilter(val);
-      setType('');
+      history.push({
+        pathname: `/${val.toLowerCase()}`,
+      });
+      1;
     },
   });
 

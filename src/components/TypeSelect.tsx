@@ -11,6 +11,20 @@ import {
 import { PokemonType, pokemonTypes, typeStyles } from "../utils/pokemonTypes";
 import * as Color from "color";
 import useStore from "../Store";
+import { animate, motion } from "framer-motion";
+import { useHistory } from "react-router-dom";
+
+const variants = {
+  initial: {
+    y: -50,
+  },
+  animate: {
+    y: 0,
+  },
+  exit: {
+    y: -50,
+  },
+};
 
 const CheckBoxCard = (props: RadioProps) => {
   const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -23,7 +37,6 @@ const CheckBoxCard = (props: RadioProps) => {
     <Box as="label">
       <input {...input} />
       <Box
-        bg="#fff"
         {...checkbox}
         cursor="pointer"
         borderWidth="2px"
@@ -48,25 +61,37 @@ const CheckBoxCard = (props: RadioProps) => {
 
 const TypeSelect = () => {
   const types = pokemonTypes;
-  const setType = useStore((state) => state.setType);
+  const history = useHistory();
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
     name: "filters",
     onChange: (val) => {
-      setType(val);
+      history.push({
+        pathname: `/type/${val}`,
+      });
     },
   });
 
   return (
-    <HStack {...getRadioRootProps()}>
-      {types.map((value) => {
-        const radio = getRadioProps({ value });
-        return (
-          <CheckBoxCard bg="#fff" key={value} value={value} {...radio}>
-            {value}
-          </CheckBoxCard>
-        );
-      })}
-    </HStack>
+    <motion.div
+      variants={variants}
+      transition={{
+        y: { type: "spring", damping: 10, stiffness: 50 },
+      }}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+    >
+      <HStack {...getRadioRootProps()}>
+        {types.map((value) => {
+          const radio = getRadioProps({ value });
+          return (
+            <CheckBoxCard key={value} value={value} {...radio}>
+              {value}
+            </CheckBoxCard>
+          );
+        })}
+      </HStack>
+    </motion.div>
   );
 };
 
