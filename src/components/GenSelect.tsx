@@ -6,7 +6,20 @@ import {
   useRadio,
   useRadioGroup,
 } from "@chakra-ui/react";
-import useStore from "../Store";
+import { motion } from "framer-motion";
+import { useHistory, useLocation } from "react-router-dom";
+
+const variants = {
+  initial: {
+    y: -50,
+  },
+  animate: {
+    y: 0,
+  },
+  exit: {
+    y: -50,
+  },
+};
 
 const RadioCard = (props: RadioProps) => {
   const { getInputProps, getCheckboxProps } = useRadio(props);
@@ -42,28 +55,44 @@ const RadioCard = (props: RadioProps) => {
 };
 
 const GenSelect = () => {
-  const generations = ['1','2', '3','4','5', '6', '7', '8'];
-  const setGen = useStore((state) => state.setGen);
-  
+  const generations = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const currentGen = params.get("generation");
+  const history = useHistory();
+
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
     name: "generation",
-    defaultValue: '1',
+    defaultValue: "1",
+    value: currentGen ?? "1",
     onChange: (val) => {
-      setGen(val);
+      const params = new URLSearchParams({ generation: val });
+
+      history.push({
+        pathname: "/",
+        search: params.toString(),
+      });
     },
   });
 
   return (
-    <HStack {...getRadioRootProps()}>
-      {generations.map((value) => {
-        const radio = getRadioProps({ value });
-        return (
-          <RadioCard key={value} value={value} {...radio}>
-            {`Gen ${value}`}
-          </RadioCard>
-        );
-      })}
-    </HStack>
+    <motion.div
+      variants={variants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+    >
+      <HStack {...getRadioRootProps()}>
+        {generations.map((value) => {
+          const radio = getRadioProps({ value });
+          return (
+            <RadioCard key={value} value={value} {...radio}>
+              {`Gen ${value}`}
+            </RadioCard>
+          );
+        })}
+      </HStack>
+    </motion.div>
   );
 };
 

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import PokeCard from "./PokeCard";
 import styled from "styled-components";
-import { Params, PokemonGenResponse, PokemonTypeResponse } from "../../types";
+import { PokemonGenResponse, PokemonTypeResponse } from "../../types";
 import { motion } from "framer-motion";
 import { Spinner } from "@chakra-ui/react";
 import { RouteComponentProps, useParams } from "react-router-dom";
@@ -15,10 +15,10 @@ interface QueryType {
 const fetchPokemons = async ({ queryKey }: QueryType) => {
   const type = queryKey[1];
   const gen = queryKey[2];
-  console.log(gen);
+  console.log(type);
   const { data } = !type
     ? await axios.get<PokemonGenResponse>(
-        `https://pokeapi.co/api/v2/generation/${gen ? gen : 1}`
+        `https://pokeapi.co/api/v2/generation/${gen ?? "1"}`
       )
     : await axios.get<PokemonTypeResponse>(
         `https://pokeapi.co/api/v2/type/${type}`
@@ -37,8 +37,8 @@ interface PokemonCardsProps extends RouteComponentProps {}
 
 const PokemonCards = ({ location }: PokemonCardsProps) => {
   const params = new URLSearchParams(location.search);
-  const pokemonType = params.get("type") ?? "fire";
-  const generation = params.get("gen") ?? 1;
+  const pokemonType = params.get("type");
+  const generation = params.get("generation");
 
   const { data, status } = useQuery(
     ["pokemons", pokemonType, generation],
@@ -49,7 +49,6 @@ const PokemonCards = ({ location }: PokemonCardsProps) => {
     <Container>
       {status === "loading" && <Spinner size="lg" thickness="4px" mt="25vh" />}
       {!pokemonType &&
-        !generation &&
         status === "success" &&
         (data as PokemonGenResponse).pokemon_species.map((pokemon) => (
           <PokeCard key={pokemon.name} title={pokemon.name} />

@@ -3,9 +3,9 @@ import * as React from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import { Pokemon } from "../../types";
-import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import { Skeleton, SkeletonText } from "@chakra-ui/react";
 import { useTheme } from "../../theme/theme";
+import { useHistory } from "react-router-dom";
 
 const Card = styled.div`
   background: ${({ theme }) => theme.card};
@@ -60,9 +60,16 @@ const PokeCard = ({ title }: Props) => {
   );
   const imgUrl = data?.sprites.other["official-artwork"].front_default;
   const theme = useTheme();
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push({
+      pathname: `/pokemon/${title}`,
+    });
+  };
 
   return (
-    <Card theme={theme}>
+    <Card theme={theme} onClick={handleClick}>
       {status === "loading" && (
         <>
           <Skeleton style={{ borderRadius: "35px" }} h={100} w={100} />

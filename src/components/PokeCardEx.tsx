@@ -3,6 +3,7 @@ import * as React from "react";
 import { usePalette } from "react-palette";
 import { Pokemon } from "../types";
 import { getPokemonType } from "../utils/pokemonTypes";
+import { useParams } from "react-router-dom";
 
 const Card = styled.div`
   display: flex;
@@ -58,9 +59,10 @@ interface Props {
   url: string;
 }
 
-const PokemonCardEx = ({ url, name, pokemon }: Props) => {
+const PokemonCardEx = ({ url, pokemon }: Props) => {
   const { data, loading, error } = usePalette(url);
-  const { stats } = pokemon;
+  // const { stats } = pokemon;
+  const { name } = useParams();
 
   return (
     <Card
@@ -74,10 +76,11 @@ const PokemonCardEx = ({ url, name, pokemon }: Props) => {
             background: `linear-gradient(${data.darkMuted}, ${data.darkVibrant})`,
           }}
         >
-          <img src={url} />
+          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png" />
         </Image>
-        <Title>{getPokemonType(pokemon.types[0].type.name)}</Title>
-        <StatsTable cellPadding="2em">
+        {/* <Title>{getPokemonType(pokemon.types[0].type.name)}</Title> */}
+        <Title>{name}</Title>
+        {/* <StatsTable cellPadding="2em">
           {console.log(pokemon.types[0].type.name)}
           {stats.map((stat) => (
             <tr>
@@ -85,7 +88,7 @@ const PokemonCardEx = ({ url, name, pokemon }: Props) => {
               <td style={{ textAlign: "center" }}>{stat.base_stat}</td>
             </tr>
           ))}
-        </StatsTable>
+        </StatsTable> */}
       </InfoContainer>
     </Card>
   );

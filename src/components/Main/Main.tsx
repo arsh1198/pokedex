@@ -7,8 +7,9 @@ import { motion } from "framer-motion";
 import { useTheme } from "../../theme/theme";
 import { Route, Router, Switch, useHistory } from "react-router-dom";
 import useStore from "../../Store";
+import PokemonCardEx from "../PokeCardEx";
 
-const Container = styled(motion.main)`
+const Container = styled.main`
   background: ${({ theme }) => theme.background};
   display: flex;
   flex-direction: column;
@@ -21,11 +22,14 @@ const Main = () => {
   const history = useHistory();
   const filter = useStore((state) => state.filter);
   return (
-    <Container layout theme={theme}>
+    <Container theme={theme}>
       {filter === "type" && <TypeSelect />}
       {filter === "generation" && <GenSelect />}
       <Router history={history}>
-        <Route path="/" component={PokemonCards}></Route>
+        <Switch>
+          <Route path="/" exact component={PokemonCards} />
+          <Route path="/pokemon/:name" component={PokemonCardEx} />
+        </Switch>
       </Router>
     </Container>
   );
