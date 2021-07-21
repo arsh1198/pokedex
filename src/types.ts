@@ -119,6 +119,5 @@ export interface PokemonTypeResponse {
 }
 
 export interface Params {
-  pokemonType: string | undefined;
-  generation: string | undefined;
+  name: string | undefined;
 }

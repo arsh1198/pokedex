@@ -23,44 +23,44 @@ export const typeStyles = {
 
 export const pokemonTypes = Object.keys(typeStyles) as Array<PokemonType>;
 
-export const getPokemonType = (pokemonType: string | undefined) => {
+export const getTypeEmoji = (pokemonType: string | undefined) => {
   switch (pokemonType) {
     case "grass":
-      return "🌿 grass";
+      return "🌿";
     case "water":
-      return "💦 water";
+      return "💦";
     case "fire":
-      return "🔥 fire";
+      return "🔥";
     case "electric":
-      return "⚡ electric";
+      return "⚡";
     case "ice":
-      return "🧊 ice";
+      return "🧊";
     case "fighting":
-      return "🥊 fighting";
+      return "🥊";
     case "poison":
-      return "☣ poison";
+      return "☣";
     case "ground":
-      return "🥌 ground";
+      return "🥌";
     case "flying":
-      return "🐦 flying";
+      return "🐦";
     case "psychic":
-      return "😵 psychic";
+      return "😵c";
     case "bug":
-      return "🐞 bug";
+      return "🐞";
     case "rock":
-      return "🥌 rock";
+      return "🥌";
     case "ghost":
-      return "👻 ghost";
+      return "👻";
     case "dark":
-      return "🌑 dark";
+      return "🌑";
     case "dragon":
-      return "🐉 dragon";
+      return "🐉";
     case "steel":
-      return "🔨 steel";
+      return "🔨";
     case "fairy":
-      return "👸 fairy";
+      return "👸";
     case "normal":
-      return "😑 normal";
+      return "😑";
     default:
       throw new Error("something went wrong here => getTypeEmojis.ts");
   }

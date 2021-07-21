@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import * as React from "react";
 import { usePalette } from "react-palette";
-import { Pokemon } from "../types";
-import { getPokemonType } from "../utils/pokemonTypes";
+import { Params, Pokemon } from "../types";
+import { getTypeEmoji } from "../utils/pokemonTypes";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import usePokemon from "../hooks/usePokemon";
@@ -65,7 +65,7 @@ interface Props {
 }
 
 const PokemonCardEx = () => {
-  const { name } = useParams();
+  const { name } = useParams<Params>();
 
   const { data, status } = useQuery(
     ["pokemon-img", name],
@@ -91,8 +91,7 @@ const PokemonCardEx = () => {
         >
           <img src={url} />
         </Image>
-        {/* <Title>{getPokemonType(data?.types[0].type.name)}</Title> */}
-        <Title>{name}</Title>
+        <Title>{name + " " + getTypeEmoji(data?.types[0].type.name)}</Title>
         <StatsTable cellPadding="2em">
           {console.log(data?.types[0].type.name)}
           {data?.stats.map((stat) => (
