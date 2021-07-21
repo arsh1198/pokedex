@@ -5,7 +5,13 @@ import GenSelect from "../GenSelect";
 import PokemonCards from "./PokeCards";
 import { motion } from "framer-motion";
 import { useTheme } from "../../theme/theme";
-import { Route, Router, Switch, useHistory } from "react-router-dom";
+import {
+  Route,
+  Router,
+  Switch,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import useStore from "../../Store";
 import PokemonCardEx from "../PokeCardEx";
 
@@ -21,10 +27,11 @@ const Main = () => {
   const theme = useTheme();
   const history = useHistory();
   const filter = useStore((state) => state.filter);
+  const params = new URLSearchParams(useLocation().search).toString();
   return (
     <Container theme={theme}>
-      {filter === "type" && <TypeSelect />}
-      {filter === "generation" && <GenSelect />}
+      {params.includes("type") && <TypeSelect />}
+      {params.includes("generation") && <GenSelect />}
       <Router history={history}>
         <Switch>
           <Route path="/" exact component={PokemonCards} />

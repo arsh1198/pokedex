@@ -4,6 +4,9 @@ import { usePalette } from "react-palette";
 import { Pokemon } from "../types";
 import { getPokemonType } from "../utils/pokemonTypes";
 import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import usePokemon from "../hooks/usePokemon";
+import { BASE_IMG_URL } from "./Main/PokeCard";
 
 const Card = styled.div`
   display: flex;
@@ -28,14 +31,16 @@ const Image = styled.div`
   }
 `;
 const Title = styled.h2`
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-top: 1em;
+  margin-top: 0.5em;
   color: rgba(0, 0, 0, 0.8);
+  text-transform: capitalize;
 `;
 
 const StatsTable = styled.table`
   width: 50%;
-  margin-top: 2em;
+  margin-top: 1em;
   td {
     color: rgba(0, 0, 0, 8);
   }
@@ -59,36 +64,46 @@ interface Props {
   url: string;
 }
 
-const PokemonCardEx = ({ url, pokemon }: Props) => {
-  const { data, loading, error } = usePalette(url);
-  // const { stats } = pokemon;
+const PokemonCardEx = () => {
   const { name } = useParams();
+
+  const { data, status } = useQuery(
+    ["pokemon-img", name],
+    ({ queryKey: [_, pokemonName] }) => usePokemon(pokemonName),
+    { enabled: Boolean(name) }
+  );
+  const url = BASE_IMG_URL + data?.id + ".png";
+
+  const { data: palleteData, loading, error } = usePalette(url);
+  // const { stats } = data;
 
   return (
     <Card
       style={{
-        background: `linear-gradient(${data.lightMuted}, ${data.lightVibrant})`,
+        background: `linear-gradient(${palleteData.lightMuted}, ${palleteData.lightVibrant})`,
       }}
     >
       <InfoContainer>
         <Image
           style={{
-            background: `linear-gradient(${data.darkMuted}, ${data.darkVibrant})`,
+            background: `linear-gradient(${palleteData.darkMuted}, ${palleteData.darkVibrant})`,
           }}
         >
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png" />
+          <img src={url} />
         </Image>
-        {/* <Title>{getPokemonType(pokemon.types[0].type.name)}</Title> */}
+        {/* <Title>{getPokemonType(data?.types[0].type.name)}</Title> */}
         <Title>{name}</Title>
-        {/* <StatsTable cellPadding="2em">
-          {console.log(pokemon.types[0].type.name)}
-          {stats.map((stat) => (
+        <StatsTable cellPadding="2em">
+          {console.log(data?.types[0].type.name)}
+          {data?.stats.map((stat) => (
             <tr>
-              <td style={{ fontWeight: 500 }}>{stat.stat.name}</td>
+              <td style={{ fontWeight: 500, textTransform: "capitalize" }}>
+                {stat.stat.name}
+              </td>
               <td style={{ textAlign: "center" }}>{stat.base_stat}</td>
             </tr>
           ))}
-        </StatsTable> */}
+        </StatsTable>
       </InfoContainer>
     </Card>
   );

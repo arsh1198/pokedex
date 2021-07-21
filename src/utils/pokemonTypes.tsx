@@ -23,7 +23,7 @@ export const typeStyles = {
 
 export const pokemonTypes = Object.keys(typeStyles) as Array<PokemonType>;
 
-export const getPokemonType = (pokemonType: string) => {
+export const getPokemonType = (pokemonType: string | undefined) => {
   switch (pokemonType) {
     case "grass":
       return "🌿 grass";

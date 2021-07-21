@@ -6,7 +6,7 @@ import {
   useRadio,
   useRadioGroup,
 } from "@chakra-ui/react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import useStore, { Filter } from "../Store";
 
 const RadioCard = (props: RadioProps) => {
@@ -47,12 +47,12 @@ const FilterOptions = () => {
   const setFilter = useStore((state) => state.setFilter);
   const options = ["type", "generation"];
   const history = useHistory();
+  const params = new URLSearchParams(useLocation().search).toString();
 
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
     name: "pokemonTypes",
+    value: params.includes("type") ? "type" : "generation",
     onChange: (val: Exclude<Filter, null>) => {
-      setFilter(val);
-
       const params = new URLSearchParams(
         val === "type" ? { type: "grass" } : { generation: "1" }
       );

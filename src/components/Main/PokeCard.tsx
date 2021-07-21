@@ -6,6 +6,10 @@ import { Pokemon } from "../../types";
 import { Skeleton, SkeletonText } from "@chakra-ui/react";
 import { useTheme } from "../../theme/theme";
 import { useHistory } from "react-router-dom";
+import usePokemon from "../../hooks/usePokemon";
+
+export const BASE_IMG_URL =
+  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
 
 const Card = styled.div`
   background: ${({ theme }) => theme.card};
@@ -45,20 +49,13 @@ interface Props {
   title: string;
 }
 
-const fetchPokemon = async (pokemonName: string) => {
-  const { data } = await axios.get<Pokemon>(
-    `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
-  );
-  return data;
-};
-
 const PokeCard = ({ title }: Props) => {
   const { data, status } = useQuery(
     ["pokemon-img", title],
-    ({ queryKey: [_, pokemonName] }) => fetchPokemon(pokemonName),
+    ({ queryKey: [_, pokemonName] }) => usePokemon(pokemonName),
     { enabled: Boolean(title) }
   );
-  const imgUrl = data?.sprites.other["official-artwork"].front_default;
+  const imgUrl = BASE_IMG_URL + data?.id + ".png";
   const theme = useTheme();
   const history = useHistory();
 
