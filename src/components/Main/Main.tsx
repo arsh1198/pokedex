@@ -3,7 +3,7 @@ import styled from "styled-components";
 import TypeSelect from "../TypeSelect";
 import GenSelect from "../GenSelect";
 import PokemonCards from "./PokeCards";
-import { motion } from "framer-motion";
+import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 import { useTheme } from "../../theme/theme";
 import {
   Route,
@@ -35,6 +35,7 @@ const Main = () => {
       <Router history={history}>
         <Switch>
           <Route path="/" exact component={PokemonCards} />
+
           <Route path="/pokemon/:name" component={PokemonCardEx} />
         </Switch>
       </Router>

@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useRadioGroup, HStack, Input } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 import FilterOptions from "../FilterOptions";
-import TypeSelect from "../TypeSelect";
+import { Autocomplete } from "@material-ui/lab";
+import { PokemonNames } from "../../utils/pokemonNames";
+import { TextField } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import { useTheme } from "../../theme/theme";
 
 const Container = styled.div`
   width: 100%;
@@ -12,18 +16,39 @@ const Container = styled.div`
 `;
 
 const Search = () => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string | null>("");
+  const [inputValue, setInputValue] = useState("");
+  const history = useHistory();
+  const theme = useTheme();
 
   return (
     <Container>
-      <Input
-        placeholder="Search for a pokemon"
-        bg="#fff"
-        w="100%"
-        maxW="300px"
+      <Autocomplete
+        onReset={() => console.log("reset")}
+        style={{
+          width: "100%",
+          maxWidth: "300px",
+        }}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+          newValue && history.push(`/pokemon/${newValue}`);
+        }}
+        inputValue={inputValue}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
+        options={PokemonNames}
+        getOptionLabel={(pokemon) => pokemon}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="outlined"
+            label="Search for a pokemon"
+          />
+        )}
       />
+
       <FilterOptions />
     </Container>
   );

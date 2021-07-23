@@ -6,9 +6,13 @@ import { getTypeEmoji } from "../utils/pokemonTypes";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import usePokemon from "../hooks/usePokemon";
-import { BASE_IMG_URL } from "./Main/PokeCard";
+import { motion } from "framer-motion";
+import { Skeleton, SkeletonText } from "@chakra-ui/react";
 
-const Card = styled.div`
+const BASE_IMG_URL =
+  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
+
+const Card = styled(motion.div)`
   display: flex;
   flex-direction: column;
   height: 550px;
@@ -79,6 +83,7 @@ const PokemonCardEx = () => {
 
   return (
     <Card
+      layoutId="expandable-card"
       style={{
         background: `linear-gradient(${palleteData.lightMuted}, ${palleteData.lightVibrant})`,
       }}
@@ -89,20 +94,49 @@ const PokemonCardEx = () => {
             background: `linear-gradient(${palleteData.darkMuted}, ${palleteData.darkVibrant})`,
           }}
         >
-          <img src={url} />
+          {status === "loading" ? (
+            <Skeleton
+              opacity={0.2}
+              borderRadius="25px"
+              height="150px"
+              width="150px"
+            />
+          ) : (
+            <img src={url} />
+          )}
         </Image>
-        <Title>{name + " " + getTypeEmoji(data?.types[0].type.name)}</Title>
-        <StatsTable cellPadding="2em">
-          {console.log(data?.types[0].type.name)}
-          {data?.stats.map((stat) => (
-            <tr>
-              <td style={{ fontWeight: 500, textTransform: "capitalize" }}>
-                {stat.stat.name}
-              </td>
-              <td style={{ textAlign: "center" }}>{stat.base_stat}</td>
-            </tr>
-          ))}
-        </StatsTable>
+        {status === "loading" ? (
+          <Skeleton
+            opacity={0.1}
+            borderRadius="10px"
+            mt={5}
+            height="40px"
+            width="200px"
+          />
+        ) : (
+          <Title>{data?.name}</Title>
+        )}
+        {status === "loading" ? (
+          <SkeletonText
+            opacity={0.2}
+            noOfLines={8}
+            width="275px"
+            mt={5}
+            spacing={3}
+          />
+        ) : (
+          <StatsTable cellPadding="2em">
+            {console.log(data?.types[0].type.name)}
+            {data?.stats.map((stat) => (
+              <tr>
+                <td style={{ fontWeight: 500, textTransform: "capitalize" }}>
+                  {stat.stat.name}
+                </td>
+                <td style={{ textAlign: "center" }}>{stat.base_stat}</td>
+              </tr>
+            ))}
+          </StatsTable>
+        )}
       </InfoContainer>
     </Card>
   );

@@ -7,11 +7,12 @@ import { Skeleton, SkeletonText } from "@chakra-ui/react";
 import { useTheme } from "../../theme/theme";
 import { useHistory } from "react-router-dom";
 import usePokemon from "../../hooks/usePokemon";
+import { motion } from "framer-motion";
 
-export const BASE_IMG_URL =
-  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
+export const BASE_SPRITE_URL =
+  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
-const Card = styled.div`
+const Card = styled(motion.div)`
   background: ${({ theme }) => theme.card};
   display: flex;
   flex-direction: column;
@@ -47,15 +48,17 @@ const Card = styled.div`
 
 interface Props {
   title: string;
+  style?: React.CSSProperties;
 }
 
-const PokeCard = ({ title }: Props) => {
+const PokeCard = (props: Props) => {
+  const { title } = props;
   const { data, status } = useQuery(
     ["pokemon-img", title],
     ({ queryKey: [_, pokemonName] }) => usePokemon(pokemonName),
     { enabled: Boolean(title) }
   );
-  const imgUrl = BASE_IMG_URL + data?.id + ".png";
+  const imgUrl = BASE_SPRITE_URL + data?.id + ".png";
   const theme = useTheme();
   const history = useHistory();
 
@@ -66,7 +69,12 @@ const PokeCard = ({ title }: Props) => {
   };
 
   return (
-    <Card theme={theme} onClick={handleClick}>
+    <Card
+      layoutId="expandable-card"
+      {...props}
+      theme={theme}
+      onClick={handleClick}
+    >
       {status === "loading" && (
         <>
           <Skeleton style={{ borderRadius: "35px" }} h={100} w={100} />

@@ -80,13 +80,13 @@ const TypeSelect = () => {
 
   return (
     <motion.div
-      variants={variants}
-      // transition={{
-      //   y: { type: "spring", damping: 10, stiffness: 50 }
-      // }}
-      initial="initial"
-      animate="animate"
-      exit="exit"
+    // variants={variants}
+    // // transition={{
+    // //   y: { type: "spring", damping: 10, stiffness: 50 }
+    // // }}
+    // initial="initial"
+    // animate="animate"
+    // exit="exit"
     >
       <HStack {...getRadioRootProps()}>
         {types.map((value) => {

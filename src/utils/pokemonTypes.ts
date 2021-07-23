@@ -44,7 +44,7 @@ export const getTypeEmoji = (pokemonType: string | undefined) => {
     case "flying":
       return "🐦";
     case "psychic":
-      return "😵c";
+      return "😵";
     case "bug":
       return "🐞";
     case "rock":

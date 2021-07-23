@@ -77,10 +77,10 @@ const GenSelect = () => {
 
   return (
     <motion.div
-      variants={variants}
-      initial="initial"
-      animate="animate"
-      exit="exit"
+    // variants={variants}
+    // initial="initial"
+    // animate="animate"
+    // exit="exit"
     >
       <HStack {...getRadioRootProps()}>
         {generations.map((value) => {

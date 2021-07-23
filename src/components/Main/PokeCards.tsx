@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { PokemonGenResponse, PokemonTypeResponse } from "../../types";
 import { motion } from "framer-motion";
 import { Spinner } from "@chakra-ui/react";
-import { RouteComponentProps, useParams } from "react-router-dom";
 
 interface QueryType {
   queryKey: Array<any>;
@@ -33,9 +32,7 @@ const Container = styled(motion.div)`
   margin-top: 1.5em;
 `;
 
-interface PokemonCardsProps extends RouteComponentProps {}
-
-const PokemonCards = ({ location }: PokemonCardsProps) => {
+const PokemonCards = () => {
   const params = new URLSearchParams(location.search);
   const pokemonType = params.get("type");
   const generation = params.get("generation");
@@ -44,6 +41,7 @@ const PokemonCards = ({ location }: PokemonCardsProps) => {
     ["pokemons", pokemonType, generation],
     fetchPokemons
   );
+  let rowCount = 0;
 
   return (
     <Container>
