@@ -43,6 +43,12 @@ const RadioCard = (props: RadioProps) => {
   );
 };
 
+const syncWithParams = (param: string) => {
+  if (param.includes("type")) return "type";
+  else if (param.includes("generation")) return "generation";
+  else return "";
+};
+
 const FilterOptions = () => {
   const setFilter = useStore((state) => state.setFilter);
   const options = ["type", "generation"];
@@ -51,7 +57,7 @@ const FilterOptions = () => {
 
   const { getRootProps: getRadioRootProps, getRadioProps } = useRadioGroup({
     name: "pokemonTypes",
-    value: params.includes("type") ? "type" : "generation",
+    value: syncWithParams(params),
     onChange: (val: Exclude<Filter, null>) => {
       const params = new URLSearchParams(
         val === "type" ? { type: "grass" } : { generation: "1" }

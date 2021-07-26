@@ -14,7 +14,7 @@ interface QueryType {
 const fetchPokemons = async ({ queryKey }: QueryType) => {
   const type = queryKey[1];
   const gen = queryKey[2];
-  console.log(type);
+
   const { data } = !type
     ? await axios.get<PokemonGenResponse>(
         `https://pokeapi.co/api/v2/generation/${gen ?? "1"}`

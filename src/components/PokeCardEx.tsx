@@ -126,7 +126,6 @@ const PokemonCardEx = () => {
           />
         ) : (
           <StatsTable cellPadding="2em">
-            {console.log(data?.types[0].type.name)}
             {data?.stats.map((stat) => (
               <tr>
                 <td style={{ fontWeight: 500, textTransform: "capitalize" }}>

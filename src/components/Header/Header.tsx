@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Search from "./Search";
 import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "../../theme/theme";
+import Logo from "./Logo";
 
 const Container = styled.header`
   display: flex;
@@ -18,6 +19,7 @@ const Header = () => {
   const theme = useTheme();
   return (
     <Container theme={theme}>
+      <Logo />
       <Search />
       <ThemeToggle />
     </Container>

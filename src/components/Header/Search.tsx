@@ -19,12 +19,10 @@ const Search = () => {
   const [value, setValue] = useState<string | null>("");
   const [inputValue, setInputValue] = useState("");
   const history = useHistory();
-  const theme = useTheme();
 
   return (
     <Container>
       <Autocomplete
-        onReset={() => console.log("reset")}
         style={{
           width: "100%",
           maxWidth: "300px",
