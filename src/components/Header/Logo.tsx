@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import pikachu from "../../../public/assets/pikachu.gif";
+import pikachu from "../../../assets/pikachu.gif";
 
 const Logo = () => {
   const history = useHistory();
